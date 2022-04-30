@@ -5,7 +5,7 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
         classpath "org.grails.plugins:hibernate5:7.2.2"
-        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.6"
+        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.7"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.3.4"
     }
 }
@@ -98,12 +98,16 @@ tasks.withType(Test) {
 }
 
 webdriverBinaries {
+    driverUrlsConfiguration = resources.text.fromFile('repository-3.0.json')
     if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
         chromedriver {
-            version = '2.45.0'
+            version = '101.0.4951.41'
+            //architecture = 'ARM64'
             fallbackTo32Bit = true
         }
-        geckodriver '0.30.0'
+        geckodriver {
+            version = '0.31.0'
+        }
     }
 }
 
